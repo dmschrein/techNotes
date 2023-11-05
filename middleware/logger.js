@@ -5,16 +5,14 @@ const fsPromises = require('fs').promises
 const path = require('path')
 
 const logEvents = async (message, logFileName) => {
-    const dateTime = `${format(new Date(), 'yyyyMMdd\tHH:mm:ss')}`
+    const dateTime = format(new Date(), 'yyyyMMdd\tHH:mm:ss')
     const logItem = `${dateTime}\t${uuid()}\t${message}\n`
 
-    // look for the directory containing log files or create a new one
     try {
         if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
-            await fsPromises.mkdirSync(path.join(__dirname, '..', 'logs'))
+            await fsPromises.mkdir(path.join(__dirname, '..', 'logs'))
         }
         await fsPromises.appendFile(path.join(__dirname, '..', 'logs', logFileName), logItem)
-
     } catch (err) {
         console.log(err)
     }
