@@ -29,13 +29,13 @@ const getAllNotes = asyncHandler(async (req, res) => {
 // @route POST /notes
 // @access Private
 const createNewNote = asyncHandler(async (req, res) => {
-    const { username, title, text } = req.body
-    console.log(title)
+    const { user, title, text } = req.body
+
     // Confirm data
-    if (!username || !title || !text) {
+    if (!user || !title || !text) {
         return res.status(400).json({ message: 'All fields are required' })
     }
-    console.log("checking for duplicate title")
+
     // Check for duplicate title
     const duplicate = await Note.findOne({ title }).lean().exec()
 

@@ -8,7 +8,4 @@ router.route('/')
     .patch(notesController.updateNote)
     .delete(notesController.deleteNote)
 
-// router.route('/{user}')
-//     .get(notesController.getUserNotes)
-    
 module.exports = router
