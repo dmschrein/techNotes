@@ -27,7 +27,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 if (result?.ids) {
                     return [
                         { type: 'User', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'User', id}))
+                        ...result.ids.map(id => ({ type: 'User', id }))
                     ]
                 } else return [{ type: 'User', id: 'LIST' }]
             }
@@ -43,12 +43,12 @@ export const {
 export const selectUsersResult = usersApiSlice.endpoints.getUsers.select()
 
 // creates memoized selector
-const selectUserData = createSelector(
-    selectUsersResult, 
-    usersResult => usersResult.data //normalized state object with ids & entities
+const selectUsersData = createSelector(
+    selectUsersResult,
+    usersResult => usersResult.data // normalized state object with ids & entities
 )
 
-//getSelector creates these selectors and we rename them with aliases using destructing
+//getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
     selectAll: selectAllUsers,
     selectById: selectUserById,
