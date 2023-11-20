@@ -1,16 +1,11 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-// Import the mutation hook for adding new notes from the notes API slice
-import { useAddNewNoteMutation } from './notesApiSlice'
-import { useNavigate } from 'react-router-dom'
-// Import FontAwesome component and faSave icon use in this component
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAddNewNoteMutation } from "./notesApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { faSave } from "@fortawesome/free-solid-svg-icons"
 
-// Define the NewNoteForm component accepting users as a prop (notes belong to a user)
 const NewNoteForm = ({ users }) => {
 
-    // Hook to manage the state and lifecycle of the adding a new note
     const [addNewNote, {
         isLoading,
         isSuccess,
@@ -18,15 +13,12 @@ const NewNoteForm = ({ users }) => {
         error
     }] = useAddNewNoteMutation()
 
-    // Hook to  programmatically navigate to different routes
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    // State for managing the title, text, and userId of the new note
     const [title, setTitle] = useState('')
-    const [text, setText] = useState(false)
+    const [text, setText] = useState('')
     const [userId, setUserId] = useState(users[0].id)
 
-    // Effect to reset form and navigate when a note is successfully added
     useEffect(() => {
         if (isSuccess) {
             setTitle('')
@@ -36,15 +28,12 @@ const NewNoteForm = ({ users }) => {
         }
     }, [isSuccess, navigate])
 
-    // Handlers for changing title, text, and userId state
     const onTitleChanged = e => setTitle(e.target.value)
     const onTextChanged = e => setText(e.target.value)
     const onUserIdChanged = e => setUserId(e.target.value)
 
-    // Check if the note cna be saved (fields are not empty and not loading)
     const canSave = [title, text, userId].every(Boolean) && !isLoading
 
-    // Handler for saving a note
     const onSaveNoteClicked = async (e) => {
         e.preventDefault()
         if (canSave) {
@@ -52,22 +41,19 @@ const NewNoteForm = ({ users }) => {
         }
     }
 
-    // Mapping users to option elements for a dropdown
     const options = users.map(user => {
         return (
-            <option 
+            <option
                 key={user.id}
                 value={user.id}
-            > {user.username}</option>
+            > {user.username}</option >
         )
     })
 
-    // Classes for error message and validation
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
-    const validateTextClass = !text ? "form__input--incomplete" : ''
+    const validTextClass = !text ? "form__input--incomplete" : ''
 
-    // JSX for rendering the form 
     const content = (
         <>
             <p className={errClass}>{error?.data?.message}</p>
@@ -82,7 +68,7 @@ const NewNoteForm = ({ users }) => {
                             disabled={!canSave}
                         >
                             <FontAwesomeIcon icon={faSave} />
-                            </button>
+                        </button>
                     </div>
                 </div>
                 <label className="form__label" htmlFor="title">
@@ -94,22 +80,35 @@ const NewNoteForm = ({ users }) => {
                     type="text"
                     autoComplete="off"
                     value={title}
-                    onChange={onTitleChanged} 
+                    onChange={onTitleChanged}
                 />
+
+                <label className="form__label" htmlFor="text">
+                    Text:</label>
+                <textarea
+                    className={`form__input form__input--text ${validTextClass}`}
+                    id="text"
+                    name="text"
+                    value={text}
+                    onChange={onTextChanged}
+                />
+
                 <label className="form__label form__checkbox-container" htmlFor="username">
                     ASSIGNED TO:</label>
                 <select
-                id="username"
-                name="username"
-                className="form__select"
-                value={userId}
-                onChange={onUserIdChanged} 
+                    id="username"
+                    name="username"
+                    className="form__select"
+                    value={userId}
+                    onChange={onUserIdChanged}
                 >
                     {options}
                 </select>
+
             </form>
         </>
     )
+
     return content
 }
 
