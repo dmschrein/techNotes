@@ -15,8 +15,8 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "date-fns": "^2.29.1",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-rate-limit": "^6.5.1",
     "jsonwebtoken": "^8.5.1",
@@ -25,6 +25,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.22"
   }
 }
