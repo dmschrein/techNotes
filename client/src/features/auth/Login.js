@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
 
+import usePersist from '../../hooks/usePersist'
+
 // Login component definition
 const Login = () => {
   // useRef to manage focus on user input and on error if there is one - reference DOM elements 
@@ -16,6 +18,7 @@ const Login = () => {
   const [username, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
+  const [persist, setPersist] = usePersist('')
 
   // Custom hooks for navigation and dispatching actions to Redux store
   const navigate = useNavigate()
@@ -60,6 +63,7 @@ const Login = () => {
   // handlers
   const handleUserInput = (e) => setUserName(e.target.value)
   const handlePwdInput = (e) => setPassword(e.target.value)
+  const handleToggle = () => setPersist(prev => !prev)
 
   const errClass = errMsg ? "errmsg" : "offscreen"
 
@@ -96,6 +100,18 @@ const Login = () => {
             required 
           />
           <button className="form__submit-button">Sign In</button>
+
+          <label htmlFor="persist" className="form__persist">
+            <input 
+              type="checkbox"
+              className="form__checkbox"
+              id="persist"
+              onChange={handleToggle}
+              checked={persist}
+            />
+            Trust This Device
+          </label>
+
         </form>
         </main>
         <footer>
