@@ -19,11 +19,11 @@ const NewNoteForm = ({ users }) => {
     }] = useAddNewNoteMutation()
 
     // Hook to  programmatically navigate to different routes
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     // State for managing the title, text, and userId of the new note
     const [title, setTitle] = useState('')
-    const [text, setText] = useState(false)
+    const [text, setText] = useState('')
     const [userId, setUserId] = useState(users[0].id)
 
     // Effect to reset form and navigate when a note is successfully added
@@ -65,7 +65,7 @@ const NewNoteForm = ({ users }) => {
     // Classes for error message and validation
     const errClass = isError ? "errmsg" : "offscreen"
     const validTitleClass = !title ? "form__input--incomplete" : ''
-    const validateTextClass = !text ? "form__input--incomplete" : ''
+    const validTextClass = !text ? "form__input--incomplete" : ''
 
     // JSX for rendering the form 
     const content = (
@@ -96,6 +96,16 @@ const NewNoteForm = ({ users }) => {
                     value={title}
                     onChange={onTitleChanged} 
                 />
+
+                <label className="form__label" htmlFor="text">
+                    Text:</label>
+                    <textarea 
+                        className={`form__input form__input--text ${validTextClass}`}
+                        id="text"
+                        name="text"
+                        value={text}
+                        onChange={onTextChanged}
+                    />
                 <label className="form__label form__checkbox-container" htmlFor="username">
                     ASSIGNED TO:</label>
                 <select
