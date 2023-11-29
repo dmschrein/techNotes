@@ -18,13 +18,13 @@ export const notesApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         // Endpoint for fetching notes
         getNotes: builder.query({
-            query: () => '/notes',
-            // Custom status validation
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError
-            },
-            // Time to keep unused data
-            keepUnusedDataFor: 5,
+            query: () => ({
+                url: '/notes',
+                // Custom status validation
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                },
+            }),
             // Transforming response data to fit the state structure
             transformResponse: responseData => {
                 const loadedNotes = responseData.map(note => {
